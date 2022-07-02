@@ -4,14 +4,23 @@ import java.awt.EventQueue;
 
 import javax.swing.JOptionPane;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.rsocket.server.RSocketServer.Transport;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import br.com.senai.senaifrontend.client.TransportadoraClient;
+import br.com.senai.senaifrontend.dto.Transportadora;
+import br.com.senai.senaifrontend.view.TelaPrincipal;
+
 @SpringBootApplication
 public class InitApp {
+	
+	@Autowired
+	private TelaPrincipal principal;
 	
 	public static void main(String[] args) {
 		SpringApplicationBuilder builder = 
@@ -29,8 +38,9 @@ public class InitApp {
 					public void run() {
 						try {							
 							//Apresentar tela principal aqui
-						} catch (Exception e) {
-							e.printStackTrace();
+							principal.setVisible(true);
+						} catch (Exception e) {							
+							JOptionPane.showMessageDialog(null, e.getMessage());
 						}
 					}
 				});
