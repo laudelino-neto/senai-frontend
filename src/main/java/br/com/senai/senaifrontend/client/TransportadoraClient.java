@@ -1,6 +1,8 @@
 package br.com.senai.senaifrontend.client;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.senai.senaifrontend.dto.Transportadora;
 
 @Component
@@ -16,6 +20,9 @@ public class TransportadoraClient {
 	
 	@Value("${endpoint}")
 	private String urlEndpoint;
+	
+	@Autowired
+	private ObjectMapper mapper;
 	
 	private final String resource = "/transportadoras";
 	
@@ -52,11 +59,19 @@ public class TransportadoraClient {
 	
 	@SuppressWarnings("unchecked")
 	public List<Transportadora> listarPor(String nomeFantasia){
+		
 		RestTemplate httpClient = builder.build();
-		List<Transportadora> transportadoras = httpClient
-				.getForObject(urlEndpoint + resource 
-						+ "/nome-fantasia/" + nomeFantasia, 
-						List.class);
+		
+		List<LinkedHashMap<String, Object>> response = httpClient.getForObject(
+				urlEndpoint + resource + "/nome-fantasia/" + nomeFantasia, List.class);
+		
+		List<Transportadora> transportadoras = new ArrayList<Transportadora>();
+		
+		for (LinkedHashMap<String, Object> item : response) {
+			Transportadora transportadora = mapper.convertValue(item, Transportadora.class);
+			transportadoras.add(transportadora);
+		}
+		
 		return transportadoras;
 	}
 

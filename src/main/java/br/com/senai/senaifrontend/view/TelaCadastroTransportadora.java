@@ -2,6 +2,7 @@ package br.com.senai.senaifrontend.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -21,7 +22,9 @@ import br.com.senai.senaifrontend.client.TransportadoraClient;
 import br.com.senai.senaifrontend.dto.Transportadora;
 
 @Component
-public class TelaCadastroTransportadora extends JFrame {
+public class TelaCadastroTransportadora extends JFrame implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 	private JTextField edtNomeFantasia;
@@ -43,13 +46,21 @@ public class TelaCadastroTransportadora extends JFrame {
 		this.transportadoraSalva = transportadoraSalva;
 		setVisible(true);
 	}
+	
+	public void colocarEmInclusao() {
+		this.transportadoraSalva = null;
+		this.edtRazaoSocial.setText("");
+		this.edtNomeFantasia.setText("");
+		this.edtCnpj.setText("");
+		setVisible(true);
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	public TelaCadastroTransportadora() {
 		setTitle("Cadastro de Transportadora");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 233);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

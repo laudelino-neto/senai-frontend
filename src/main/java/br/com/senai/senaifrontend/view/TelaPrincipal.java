@@ -1,8 +1,12 @@
 package br.com.senai.senaifrontend.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,19 +14,15 @@ import javax.swing.border.EmptyBorder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 @Component
-public class TelaPrincipal extends JFrame {
+public class TelaPrincipal extends JFrame implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 	
 	@Autowired
-	private TelaCadastroTransportadora cadastro;
+	private TelaListagemTransportadora listagem;
 
 	/**
 	 * Create the frame.
@@ -38,7 +38,7 @@ public class TelaPrincipal extends JFrame {
 		JButton btnTransportadoras = new JButton("Transportadoras");
 		btnTransportadoras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastro.setVisible(true);
+				listagem.setVisible(true);
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
